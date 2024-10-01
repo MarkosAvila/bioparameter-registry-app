@@ -1,21 +1,29 @@
+import os
+from datetime import UTC, datetime, timedelta
 from typing import Annotated
-from datetime import datetime, timedelta, UTC
 
-from fastapi import Depends, APIRouter, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm, SecurityScopes
+from dotenv import load_dotenv
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import (
+    OAuth2PasswordBearer,
+    OAuth2PasswordRequestForm,
+    SecurityScopes,
+)
 from jose import jwt
-from passlib.context import CryptContext
-from sqlalchemy.orm import Session
-from sqlalchemy import select
-from pydantic import BaseModel, ValidationError
 from jose.exceptions import JWTError
+from passlib.context import CryptContext
+from pydantic import BaseModel, ValidationError
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from dependencies.dependencies import get_db
 from models.models import Doctor, Patient
 from schemas.schemas import DoctorScopes, PatientScopes
-from env_loader import EnvLoader
 
-env_loader = EnvLoader()
+load_dotenv()
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
 
 router = APIRouter()
 
@@ -78,7 +86,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     else:
         expire = datetime.now(UTC) + timedelta(minutes=15)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, env_loader.secrete_key, algorithm=env_loader.algorithm)
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, ALGORITHM)
     return encoded_jwt
 
 
@@ -97,7 +105,7 @@ def get_current_user(
         headers={"WWW-Authenticate": authenticate_value},
     )
     try:
-        payload = jwt.decode(token, env_loader.secrete_key, algorithms=env_loader.algorithm)
+        payload = jwt.decode(token, SECRET_KEY, ALGORITHM)
         user_id: str = payload.get("sub")
         if user_id is None:
             raise credentials_exception
@@ -127,7 +135,7 @@ def login_for_access_token(
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
-    access_token_expires = timedelta(minutes=env_loader.acces_token_expire_minutes)
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
     scopes = [user.scopes[0]]
     if len(user.scopes) == 2:

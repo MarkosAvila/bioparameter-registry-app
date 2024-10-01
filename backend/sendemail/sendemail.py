@@ -1,20 +1,22 @@
+import os
 import smtplib
-from random import randint
-
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from random import randint
+
+from dotenv import load_dotenv
 
 from templates.email import EMAIL_HTML_TEMPLATE
-from env_loader import EnvLoader
 
-env_loader = EnvLoader()
+load_dotenv()
+
 
 class EmailSenderClass:
     def __init__(self):
         """ """
-        self.logaddr = env_loader.from_address
-        self.fromaddr = env_loader.from_address
-        self.password = env_loader.password_google
+        self.logaddr = os.getenv("ADDRESS")
+        self.fromaddr = os.getenv("ADDRESS")
+        self.password = os.getenv("PASSWORD_GOOGLE")
 
     def sendMessageViaServer(self, toaddr, msg):
         # Send the message via local SMTP server.
