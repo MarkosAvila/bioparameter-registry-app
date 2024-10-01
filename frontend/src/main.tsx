@@ -8,6 +8,7 @@ import HeaderDashboard from './routes/main_doctor.tsx'
 import DoctorDashboard from './routes/dashboard_main.tsx'
 import ErrorPage from './components/error-page.tsx';
 import PatientDetail from './routes/patient_detail.tsx';
+import PatientList from './routes/all_patients.tsx'
 import './index.css'
 
 const router = createBrowserRouter([
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
         path: "patients/:patientId",
         element: <PatientDetail />,
         errorElement: <ErrorPage />
+      },
+      {
+        path: "patients",
+        element: <PatientList />
       }
     ]
   },
