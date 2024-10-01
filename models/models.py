@@ -26,11 +26,7 @@ class Doctor(Base):
     specialty: Mapped[str | None] = mapped_column(String(30))
     password: Mapped[str] = mapped_column(String(255))
     portrait: Mapped[str | None] = mapped_column(String(100))
-    patients: Mapped[list["Patient"]] = relationship(
-        secondary=doctor_patient,
-        cascade="all, delete",
-        back_populates="doctors",
-    )
+    patients: Mapped[list["Patient"]] = relationship(secondary=doctor_patient, cascade="all, delete",back_populates="doctors")
     email = relationship("Email", back_populates="doctor", cascade="all, delete")
 
     measure_cvs: Mapped[list["CardiovascularParameter"]] = relationship(back_populates="doctor", cascade="all, delete")
@@ -44,6 +40,7 @@ class Email(Base):
     email_address: Mapped[str] = mapped_column(String(30))
     email_verify: Mapped[bool] = mapped_column(default=False)
     code: Mapped[int]
+
     doctor_id: Mapped[str] = mapped_column(String(30), ForeignKey("doctors.id", ondelete="CASCADE"))
     doctor = relationship("Doctor", back_populates="email")
 
@@ -53,6 +50,7 @@ class Address(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     address = mapped_column(JSON)
+
     patient = relationship("Patient", back_populates="address")
 
 
@@ -69,20 +67,14 @@ class Patient(Base):
     scholing: Mapped[Scholing | None]
     employee: Mapped[bool | None]
     married: Mapped[bool | None]
-    password:  Mapped[str]
-    doctors: Mapped[list["Doctor"]] = relationship(
-        secondary=doctor_patient,
-        cascade="all, delete",
-        back_populates="patients",
-    )
+    password:  Mapped[str] = mapped_column(String(255))
+    doctors: Mapped[list["Doctor"]] = relationship( secondary=doctor_patient, cascade="all, delete", back_populates="patients")
+
     address_id: Mapped[int | None] = mapped_column(ForeignKey("address.id"))
     address = relationship("Address", back_populates="patient", cascade="all, delete")
-    measure_cvs: Mapped[list["CardiovascularParameter"]] = relationship(
-        back_populates="patient", cascade="all, delete"
-    )
-    measure_blood_sugar: Mapped[list["BloodSugarLevel"]] = relationship(
-        back_populates="patient", cascade="all, delete"
-    )
+
+    measure_cvs: Mapped[list["CardiovascularParameter"]] = relationship(back_populates="patient", cascade="all, delete")
+    measure_blood_sugar: Mapped[list["BloodSugarLevel"]] = relationship(back_populates="patient", cascade="all, delete")
 
 
 class CardiovascularParameter(Base):
@@ -93,9 +85,11 @@ class CardiovascularParameter(Base):
     systolic: Mapped[int] = mapped_column(default=120)
     diastolic: Mapped[int] = mapped_column(default=80)
     heart_rate: Mapped[int | None] = mapped_column(default=None)
+
     patient_id: Mapped[str] = mapped_column(ForeignKey("patients.id", ondelete="CASCADE"))
-    doctor_id: Mapped[str] = mapped_column(ForeignKey("doctors.id", ondelete="CASCADE"))
     patient = relationship("Patient", back_populates="measure_cvs")
+
+    doctor_id: Mapped[str] = mapped_column(ForeignKey("doctors.id", ondelete="CASCADE"))
     doctor = relationship("Doctor", back_populates="measure_cvs")
 
 
@@ -105,7 +99,9 @@ class BloodSugarLevel(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     date = mapped_column(DateTime(timezone=True))
     value: Mapped[float]
+
     patient_id: Mapped[str] = mapped_column(ForeignKey("patients.id", ondelete="CASCADE"))
-    doctor_id: Mapped[str] = mapped_column(ForeignKey("doctors.id", ondelete="CASCADE"))
     patient = relationship("Patient", back_populates="measure_blood_sugar")
+
+    doctor_id: Mapped[str] = mapped_column(ForeignKey("doctors.id", ondelete="CASCADE"))
     doctor = relationship("Doctor", back_populates="measure_blood_sugar")
