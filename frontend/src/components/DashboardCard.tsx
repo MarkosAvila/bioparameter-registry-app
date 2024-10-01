@@ -14,7 +14,7 @@ const DashboardCard: React.FC<Props> = ({ totalPatients, abnormalBloodSugar, abn
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
             <p className="text-sm text-gray-500">Total Patients</p>
-            <p className="text-2xl font-bold">{totalPatients}</p>
+            <p className="text-2xl font-bold text-gray-800">{totalPatients}</p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Abnormal Blood Sugar</p>

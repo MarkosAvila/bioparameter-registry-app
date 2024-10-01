@@ -2,30 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
-  --radius: 10px; /* default radius value */
-  --background: #87A2B5; /* default background color */
-  --foreground: #455A64; /* default foreground color */
-  --card: #F7F7F7; /* default card color */
-  --card-foreground: #455A64; /* default card foreground color */
-  --popover: #B3C3D3; /* default popover color */
-  --popover-foreground: #2F3E4F; /* default popover foreground color */
-  --primary: #87A2B5; /* default primary color */
-  --primary-foreground: #455A64; /* default primary foreground color */
-  --secondary: #5C6BC0; /* default secondary color */
-  --secondary-foreground: #3B4F6B; /* default secondary foreground color */
-  --muted: #455A64; /* default muted color */
-  --muted-foreground: #87A2B5; /* default muted foreground color */
-  --accent: #2F3E4F; /* default accent color */
-  --accent-foreground: #FFFFFF; /* default accent foreground color */
-  --destructive: #2F3E4F; /* default destructive color */
-  --destructive-foreground: #5C6BC0; /* default destructive foreground color */
-  --border: #2F3E4F; /* default border color */
-  --input: #455A64; /* default input color */
-  --ring: #5C6BC0; /* default ring color */
-  --chart-1: #87A2B5; /* default chart color 1 */
-  --chart-2: #B3C3D3; /* default chart color 2 */
-  --chart-3: #D7DFE5; /* default chart color 3 */
-  --chart-4: #F7F7F7; /* default chart color 4 */
-  --chart-5: #FFFFFF; /* default chart color 5 */
+  --radius: 10px;
+  --background: 204 23% 63%;
+  --foreground: 210 20% 35%;
+  --card: 0 0% 97%;
+  --card-foreground: 210 20% 35%;
+  --popover: 204 15% 75%;
+  --popover-foreground: 210 25% 25%;
+  --primary: 204 23% 63%;
+  --primary-foreground: 21 20% 35%;
+  --secondary: 223 30% 55%;
+  --secondary-foreground: 210 25% 30%;
+  --muted: 210 20% 35%;
+  --muted-foreground: 204 23% 63%;
+  --accent: 210 25% 25%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 210 25% 25%;
+  --destructive-foreground: 223 30% 55%;
+  --border: 210 25% 25%;
+  --input: 210 20% 35%;
+  --ring: 223 30% 55%;
+  --chart-1: 204 23% 63%;
+  --chart-2: 204 15% 75%;
+  --chart-3: 204 10% 85%;
+  --chart-4: 0 0% 97%;
+  --chart-5: 0 0% 100%;
 }

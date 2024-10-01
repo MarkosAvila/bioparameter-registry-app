@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Card } from "@/components/ui/card"
 import { AlertTriangle } from "lucide-react"
+import { Link } from 'react-router-dom'
 
 
 interface Patient {
@@ -18,26 +18,21 @@ interface Props {
 const PatientCard: React.FC<Props> = ({ patient }) => {
   return (
     <Card key={patient.id}>
-      <CardContent className="p-4 flex items-center justify-between">
+      <Link to={`patients/${patient.id}`} className="p-4 flex flex-row items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Avatar>
-            <AvatarFallback>{patient.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-          </Avatar>
           <div>
-            <p className="font-medium">{patient.name}</p>
+            <p className="font-medium text-gray-800">{patient.name}</p>
             <p className="text-sm text-gray-500">{patient.age} years, {patient.gender}</p>
           </div>
         </div>
         <AlertTriangle
           className={`h-5 w-5 ${
-            patient.condition === 'Blood Sugar'
-              ? 'text-yellow-600'
-              : patient.condition === 'Blood Pressure'
-              ? 'text-red-600'
-              : 'text-orange-600'
+            patient.condition === 'Blood Sugar' || patient.condition === 'Blood Pressure'
+            ? 'text-orange-600'
+            : 'text-red-600'
           }`}
         />
-      </CardContent>
+      </Link>
     </Card>
   );
 };
