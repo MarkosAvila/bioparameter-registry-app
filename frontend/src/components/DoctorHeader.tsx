@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Settings, Users, LogOut } from "lucide-react"
+import { Settings, Users, LogOut, Home } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,8 +21,13 @@ const DoctorHeader: React.FC<Props> = ({ doctorName, buttonText, buttonLink}) =>
       <h1 className="text-2xl font-bold text-gray-800">{doctorName}</h1>
       <div className="flex items-center space-x-4">
         <Link to={`${buttonLink}`}>
-          <Button variant="outline" size="sm" onClick={() => alert("Navigating to All Patients page")}>
-            <Users className="mr-2 h-4 w-4" />
+          <Button variant="outline" size="sm" >
+            {
+              buttonText === 'Home' ? 
+              <Home className="mr-2 h-4 w-4" />
+              :
+              <Users className="mr-2 h-4 w-4" />
+            }
             {`${buttonText}`}
           </Button>
         </Link>
