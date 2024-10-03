@@ -221,3 +221,7 @@ index.py
 testing.py
 .gitignore
 .gitignore
+
+
+
+frontend/node_modules/
