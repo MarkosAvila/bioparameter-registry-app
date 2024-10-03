@@ -6,11 +6,15 @@ export default function HeaderDashboard() {
   const buttonText = location.pathname === '/dashboard' ? 'All patients' : 'Home'
   const buttonLink = location.pathname === '/dashboard' ? 'patients' : '/dashboard'
   // Mock data for demonstration
-  const doctorName = "Dr. Smith"
+  const doctorName = "Dr. Smith" // Todo: Eliminar dato de relleno
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
-      <DoctorHeader doctorName={doctorName} buttonText={buttonText} buttonLink={buttonLink} />
+      <DoctorHeader
+        doctorName={doctorName}
+        buttonText={buttonText}
+        buttonLink={buttonLink}
+      />
       <Outlet />
     </div>
   )
